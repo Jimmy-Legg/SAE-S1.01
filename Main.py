@@ -2,7 +2,7 @@ import os
 import Jeux.Morpion as Morpion
 import Jeux.Allumettes as Allumettes
 import Jeux.P4 as P4
-import Jeux.devinette as Devinette
+import Jeux.Devinette as Devinette
 from Classes.Joueur import joueur
 
 def getJoueurs(fichier : str)->list[joueur]:
