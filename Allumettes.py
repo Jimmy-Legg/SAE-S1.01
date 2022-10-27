@@ -1,5 +1,4 @@
 import os
-import numpy
 
 def __afficherFin(winner : str, couleur : str):
 
@@ -12,12 +11,13 @@ def __afficherFin(winner : str, couleur : str):
     print("")
     print("---------------------")
 
-def __afficherMenu2(nb_allumettes : int, table : list[str], j_name : str, couleur :str)->int:
+def __getAmount(table : list[str], j_name : str, couleur :str)->int:
 
     mot : str
     _i : int
 
     W  = '\033[0m'  # white (normal)
+    R = '\033[91m' # red
 
     while True:
         mot = ""
@@ -41,10 +41,19 @@ def __afficherMenu2(nb_allumettes : int, table : list[str], j_name : str, couleu
         print("")
 
         choix = str(input("Entrez le nombre d'allumettes à enlever : (1-3) : "))
+
         if(not choix.isdigit()):
-            print("Valeur impossible")
+
+            print(R + "Valeur impossible" + W)
             os.system("pause")
-        else: break
+
+        elif(int(choix) < 1 or int(choix) > 3):
+
+            print(R + "Choisissez un nombre entre 1 et 3 !" + W)
+            os.system("pause")
+
+        else :
+            break
 
     return int(choix)
 
@@ -64,15 +73,18 @@ def LaunchGame_allumettes(j1_name : str, j2_name : str):
     nb_allumettes = 20
     turn = 1
 
-    table = list[str](numpy.full(nb_allumettes, "|"))
+    table = []
+
+    for _i in range(0, nb_allumettes):
+        table.append("|")
 
     B = '\033[94m' # blue
     R = '\033[91m' # red
 
     while True:
 
-        if(turn == 1): amount = __afficherMenu2(nb_allumettes, table, j1_name, B)
-        else: amount = __afficherMenu2(nb_allumettes, table, j2_name, R)
+        if(turn == 1): amount = __getAmount(table, j1_name, B)
+        else: amount = __getAmount(table, j2_name, R)
 
         for _i in range(0, amount):
             if(len(table) > 1):
