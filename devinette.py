@@ -1,7 +1,6 @@
 import os
 import time
 
-
 def __LaunchTurn(nombre_a_trouver : int, couleur : str, j_name : str, mini:int, maxi:int)->float:
 
     choix : str
