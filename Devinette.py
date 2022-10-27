@@ -1,7 +1,17 @@
 import os
 import time
 
-def __LaunchTurn(nombre_a_trouver : int, couleur : str, j_name : str, mini:int, maxi:int)->float:
+
+#----------------------------------------
+# Demande au deuxième joueur les hypothèses sur le nombre entré par le premier 
+#
+#private : variable accessible uniquement dans le script actuel
+#
+#Entrée : int, str, str, int, int
+#
+#Sortie : temps qu'il a pris à trouver : float
+#----------------------------------------
+def __LaunchTurn(nombre_a_trouver : int, couleur : str, couleur1 : str, j_name : str, p_name : str, mini:int, maxi:int)->float:
 
     choix : str
     nombre : int
@@ -41,7 +51,7 @@ def __LaunchTurn(nombre_a_trouver : int, couleur : str, j_name : str, mini:int, 
 
             while True:
 
-                choix = input("Nombre plus grand que " + str(nombre) + " : ")
+                choix = input(couleur1 + p_name + W + " dit que c'est un nombre plus grand que " + str(nombre) + " : ")
                 if(not str(choix).isdigit()): print("Valeur impossible")
                 elif(int(choix) < int(mini) or int(choix) > int(maxi)): print("Valeur impossible")
                 else:
@@ -57,7 +67,7 @@ def __LaunchTurn(nombre_a_trouver : int, couleur : str, j_name : str, mini:int, 
 
             while True:
 
-                choix = input("nombre plus petit que " + str(nombre) + " : ")
+                choix = input(couleur1 + p_name + W + " dit que c'est un nombre plus petit que " + str(nombre) + " : ")
                 if(not str(choix).isdigit()): print("Valeur impossible")
                 elif(int(choix) < int(mini) or int(choix) > int(maxi)): print("Valeur impossible")
                 else:
@@ -68,6 +78,16 @@ def __LaunchTurn(nombre_a_trouver : int, couleur : str, j_name : str, mini:int, 
     os.system("pause")
     return temps
 
+
+#----------------------------------------
+#Demande le nombre que l'autre joueur doit trouver 
+#
+#private : variable accessible uniquement dans le script actuel
+#
+#Entrée : str, str, int, int
+#
+#Sortie : nombre choisi : int
+#----------------------------------------
 def __askNombreATrouver(couleur : str, j_name : str, mini : int, maxi : int)->int:
 
     choix : str
@@ -85,8 +105,18 @@ def __askNombreATrouver(couleur : str, j_name : str, mini : int, maxi : int)->in
 
     return int(choix)
 
-def __checkWin(temps1:float,temps2:float, j1_name : str, j2_name : str)->str:
 
+#----------------------------------------
+#Affiche le temps des deux joueurs et le joueur qui a gagné en comparant le temps des deux joueurs
+#
+#private : variable accessible uniquement dans le script actuel
+#
+#Entrée : float, float, str, str
+#
+#Sortie : Gagnant : str
+#----------------------------------------
+def __checkWin(temps1:float,temps2:float, j1_name : str, j2_name : str)->str:
+    os.system("cls")
     winType : int
 
     B  = '\033[94m' # blue
@@ -94,24 +124,47 @@ def __checkWin(temps1:float,temps2:float, j1_name : str, j2_name : str)->str:
     R  = '\033[91m' # r
 
     if temps1 < temps2 :
+        print("---------------------------")
+        print("")
         print("le gangnant est : " + B + j1_name + W)
-        print(B + str(j1_name) + W + " a terminé en : " + str(temps1))
-        print(R + str(j2_name) + W + " a terminé en : " + str(temps2))
-        winType = 1
+        print("")
+        print("---------------------------")
+        print("")
+        print(B + str(j1_name) + W + " a terminé en : " + str(temps1)[0:4])
+        print(R + str(j2_name) + W + " a terminé en : " + str(temps2)[0:4])
+        print("")
+        print("---------------------------")
         os.system("pause")
+        winType = 1
 
     elif temps1 > temps2 :
-        print("le gangnant est : "+ R + j2_name + W)
-        print(B + str(j1_name) + W + " a terminé en : " + str(temps1))
-        print(R + str(j2_name) + W + " a terminé en : " + str(temps2))
-        winType = 2
+        print("---------------------------")
+        print("")
+        print("le gangnant est : " + R + j2_name + W)
+        print("")
+        print("---------------------------")
+        print("")
+        print(B + str(j1_name) + W + " a terminé en : " + str(temps1)[0:4])
+        print(R + str(j2_name) + W + " a terminé en : " + str(temps2)[0:4])
+        print("")
+        print(print("---------------------------"))
         os.system("pause")
+        winType = 2
+        
     else:
         print("égalité")
-        print(B + str(j1_name) + W + " a terminé en : " + str(temps1))
-        print(R + str(j2_name) + W + " a terminé en : " + str(temps2))
-        winType = 0
+        print("---------------------------")
+        print("")
+        print("égalité")
+        print("")
+        print("---------------------------")
+        print("")
+        print(B + str(j1_name) + W + " a terminé en : " + str(temps1)[0:4])
+        print(R + str(j2_name) + W + " a terminé en : " + str(temps2)[0:4])
+        print("")
+        print("---------------------------")
         os.system("pause")
+        winType = 0
 
     if(winType == 0):
         winner = ""
@@ -122,6 +175,16 @@ def __checkWin(temps1:float,temps2:float, j1_name : str, j2_name : str)->str:
 
     return winner
 
+
+#----------------------------------------
+# Demande le nombre Max que les joueurs vont pouvoir entrer 
+#
+#private : variable accessible uniquement dans le script actuel
+#
+#Entrée : None
+#
+#Sortie : Max : int
+#----------------------------------------
 def __askForMaxi():
 
     maxi : str
@@ -137,6 +200,16 @@ def __askForMaxi():
 
     return int(maxi)
 
+
+#----------------------------------------
+# Demande le nombre Min que les joueurs vont pouvoir entrer 
+#
+#private : variable accessible uniquement dans le script actuel
+#
+#Entrée : None
+#
+#Sortie : Max : int
+#----------------------------------------
 def __askForMini():
 
     mini : str
@@ -170,11 +243,11 @@ def LaunchGame_devinettes(j1_name : str, j2_name : str)->str:
 
     nombre_a_trouver = __askNombreATrouver(B, j1_name, mini, maxi)
 
-    temps1 = __LaunchTurn(nombre_a_trouver, R, j2_name, mini, maxi)
+    temps1 = __LaunchTurn(nombre_a_trouver, R, B,j2_name,j1_name, mini, maxi)
 
     nombre_a_trouver = __askNombreATrouver(R, j2_name, mini, maxi)
 
-    temps2 = __LaunchTurn(nombre_a_trouver, B, j1_name, mini, maxi)
+    temps2 = __LaunchTurn(nombre_a_trouver, B, R, j1_name, j2_name, mini, maxi)
 
     #Définition du vainqueur
     winner = __checkWin(temps1, temps2, j1_name, j2_name)
