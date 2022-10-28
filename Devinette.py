@@ -15,7 +15,7 @@ def __LaunchTurn(nombre_a_trouver : int, couleur : str, couleur1 : str, j_name :
 
     choix : str
     nombre : int
-
+    R  = '\033[91m' # r
     W  = '\033[0m'  # white (normal)
 
     os.system("cls")
@@ -28,8 +28,8 @@ def __LaunchTurn(nombre_a_trouver : int, couleur : str, couleur1 : str, j_name :
 
         print("Nombre entre " + str(mini) + " et " + str(maxi) + " : ")
         choix = input("Faites une première hypothèse : ")
-        if(not str(choix).isdigit()):print("Valeur impossible")
-        elif(int(choix) < int(mini) or int(choix) > int(maxi)):print("Valeur impossible")
+        if(not str(choix).isdigit()):print(R + "Valeur impossible" + W),os.system("pause"),os.system("cls")
+        elif(int(choix) < int(mini) or int(choix) > int(maxi)):print(R + "Valeur impossible" + W),os.system("pause"),os.system("cls")
         else:
             nombre = int(choix)
             break
@@ -44,16 +44,14 @@ def __LaunchTurn(nombre_a_trouver : int, couleur : str, couleur1 : str, j_name :
         elif nombre < nombre_a_trouver:
 
             os.system("cls")
-            print(nombre, nombre_a_trouver)
-
             print(couleur + j_name + W + " : ")
             print("Nombre entre " + str(mini) + " et " + str(maxi) + " : ")
 
             while True:
 
                 choix = input(couleur1 + p_name + W + " dit que c'est un nombre plus grand que " + str(nombre) + " : ")
-                if(not str(choix).isdigit()): print("Valeur impossible")
-                elif(int(choix) < int(mini) or int(choix) > int(maxi)): print("Valeur impossible")
+                if(not str(choix).isdigit()): print(R + "Valeur impossible" + W),os.system("pause"),os.system("cls")
+                elif(int(choix) < int(mini) or int(choix) > int(maxi)): print(R + "Valeur impossible" + W),os.system("pause"),os.system("cls")
                 else:
                     nombre = int(choix)
                     break
@@ -61,20 +59,19 @@ def __LaunchTurn(nombre_a_trouver : int, couleur : str, couleur1 : str, j_name :
         elif nombre > nombre_a_trouver:
 
             os.system("cls")
-            print(nombre, nombre_a_trouver)
             print(couleur + j_name + W + " : ")
             print("nombre entre " + str(mini) + " et " + str(maxi) + " : ")
 
             while True:
 
                 choix = input(couleur1 + p_name + W + " dit que c'est un nombre plus petit que " + str(nombre) + " : ")
-                if(not str(choix).isdigit()): print("Valeur impossible")
-                elif(int(choix) < int(mini) or int(choix) > int(maxi)): print("Valeur impossible")
+                if(not str(choix).isdigit()): print(R + "Valeur impossible" + W),os.system("pause"),os.system("cls")
+                elif(int(choix) < int(mini) or int(choix) > int(maxi)): print(R + "Valeur impossible" + W),os.system("pause"),os.system("cls")
                 else:
                     nombre = int(choix)
                     break
 
-    print("Trouvé !")
+    print('\033[93m' + "Trouvé !" + W)
     os.system("pause")
     return temps
 
@@ -91,7 +88,7 @@ def __LaunchTurn(nombre_a_trouver : int, couleur : str, couleur1 : str, j_name :
 def __askNombreATrouver(couleur : str, j_name : str, mini : int, maxi : int)->int:
 
     choix : str
-
+    R  = '\033[91m' # r
     W  = '\033[0m'  # white (normal)
 
     os.system("cls")
@@ -99,8 +96,8 @@ def __askNombreATrouver(couleur : str, j_name : str, mini : int, maxi : int)->in
 
     while True:
         choix = str(input(couleur + j_name + W + "  choisissez un nombre entre " + str(mini) + " et " + str(maxi) + " : "))
-        if(not choix.isdigit()): print("Valeur impossible")
-        elif(int(choix) < int(mini) or int(choix) > int(maxi)):print("Valeur impossible")
+        if(not choix.isdigit()): print(R + "Valeur impossible" + W),os.system("pause"),os.system("cls")
+        elif(int(choix) < int(mini) or int(choix) > int(maxi)):print(R + "Valeur impossible" + W),os.system("pause"),os.system("cls")
         else:break
 
     return int(choix)
