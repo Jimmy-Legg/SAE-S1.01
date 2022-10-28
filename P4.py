@@ -9,7 +9,6 @@ import os
 #
 #Sortie : str
 #----------------------------------------
-
 def __couleur(symbole : str, index : int, winCases: list[int])->str:
 
     W  = '\033[0m'  # white (normal)
@@ -21,6 +20,56 @@ def __couleur(symbole : str, index : int, winCases: list[int])->str:
     elif(symbole == "0"): return B
     elif(symbole == "O"): return R
     else: return W
+
+def __changeTurn(turn : int)->int:
+    if(turn == 1): turn = 2
+    else: turn = 1
+    return turn
+
+def __checkWin(cases : list[list[str]])->list[int]:
+
+    winCases : list[int]
+
+    winCases = []
+
+    for i in range(0,4):
+        for j in range(6,2,-1):
+            if (cases[i][j] == cases[i+1][j-1] and cases[i+1][j-1] == cases[i+2][j-2] and cases[i+2][j-2] == cases[i+3][j-3] and not cases[i+1][j-1] == "."):
+
+                winCases.append(i * 7 + j)
+                winCases.append((i+1) * 7 + j-1)
+                winCases.append((i+2) * 7 + j-2)
+                winCases.append((i+3) * 7 + j-3)
+
+    for i in range(0,4):
+        for j in range(0,7):
+            if (cases[j][i] == cases[j][i+1] and cases[j][i+1] == cases[j][i+2] and cases[j][i+2] == cases[j][i+3] and not cases[j][i] == "."):
+
+                winCases.append(j * 7 + i)
+                winCases.append(j * 7 + i+1)
+                winCases.append(j * 7 + i+2)
+                winCases.append(j * 7 + i+3)
+
+    for i in range(0,4):
+        for j in range(0,7):
+            if (cases[i][j] == cases[i+1][j] and cases[i+1][j] == cases [i+2][j] and cases[i+2][j] == cases[i+3][j] ) and (not cases[i][j] == "." and not cases[i+1][j] == "." and not cases[i+2][j] == "." and not cases[i+3][j] == "."):
+
+                winCases.append(i * 7 + j)
+                winCases.append((i+1) * 7 + j)
+                winCases.append((i+2) * 7 + j)
+                winCases.append((i+3) * 7 + j)
+
+    for i in range(0,4):
+        for j in range(0,4):
+            if ((cases[i][j] == cases[i+1][j+1] and cases[i+1][j+1] == cases [i+2][j+2] and cases[i+2][j+2] == cases[i+3][j+3]) and (not cases[i][j] == "." and not cases[i+1][j+1] == "." and not cases[i+2][j+2] == "." and not cases[i+3][j+3] == ".")):
+
+                winCases.append(i * 7 + j)
+                winCases.append((i+1) * 7 + j+1)
+                winCases.append((i+2) * 7 + j+2)
+                winCases.append((i+3) * 7 + j+3)
+
+    return winCases
+
 
 #----------------------------------------
 #Affiche l'interface de jeu
@@ -36,10 +85,15 @@ def __afficherMenu(cases : list[list[str]], winCases : list[int]):
     W  = '\033[0m'  # white (normal)
 
     os.system("cls")
-
     print("---------------------------------------------")
     print("Schéma :")
     print(__couleur(cases[0][0], 0, winCases) + cases[0][0] + W + " | " + __couleur(cases[0][1], 1, winCases) + cases[0][1] + W + " | " + __couleur(cases[0][2], 2, winCases) + cases[0][2] + W + " | " + __couleur(cases[0][3], 3, winCases) + cases[0][3] + W + " | " + __couleur(cases[0][4], 4, winCases) + cases[0][4] + W + " | " + __couleur(cases[0][5], 5, winCases) + cases[0][5] + W +  " | " + __couleur(cases[0][6], 6, winCases) + cases[0][6] + W)
+    __afficherPartie(cases, winCases)
+
+def __afficherPartie(cases : list[list[str]], winCases : list[int]):
+
+    W  = '\033[0m'  # white (normal)
+
     print("---------------------------------------------")
     print("Partie :")
 
@@ -48,25 +102,96 @@ def __afficherMenu(cases : list[list[str]], winCases : list[int]):
 
     print("---------------------------------------------")
 
+def __askForPlayerAction(cases : list[list[str]], j_name : str, couleur : str)->list[int]:
+
+    R  = '\033[91m' # red
+    W  = '\033[0m'  # white (normal)
+
+    choiceIsOk : bool
+    choiceIsOk = False
+    lignes : int
+    choice : str
+
+    while not choiceIsOk:
+
+        #demande le choix de l'utilisateur
+        choice = str(input(couleur + j_name + W + " choisissez votre case en suivant le schéma ci dessus : "))
+
+        #vérifie la valeur de l'utilisateur
+
+        if(not choice.isdigit()):
+            print(R + "Valeur impossible !" + W)
+            os.system("pause")
+            return []
+
+        elif(int(choice) < 1 or int(choice) > 7):
+            print(R + "La colonne n'existe pas !" + W)
+            os.system("pause")
+            return []
+
+        else:
+
+            lignes = 6
+            while True:
+
+                if(lignes <= 0):
+                    print(R + "La colonne est pleine !" + W)
+                    os.system("pause")
+                    return []
+
+                elif(cases[lignes][int(choice) - 1] == "0" or cases[lignes][int(choice) - 1] == "O"):
+                    lignes -= 1
+
+                else:
+                    choiceIsOk = True
+                    break
+
+    return[int(choice), lignes] #pyright: reportUnboundVariable=false
+
+def affichageFin(equality : bool, turn : int, j1_name : str, j2_name : str, cases : list[list[str]], winCases : list[int])->str:
+
+    W  = '\033[0m'  # white (normal)
+    R  = '\033[91m' # red
+    B  = '\033[94m' # blue
+    O  = '\033[93m' # yellow
+
+    winner : str
+
+    os.system("cls")
+
+    print("---------------------------------------------")
+    print(O + "Partie terminée : " + W)
+
+    __afficherPartie(cases, winCases)
+
+    if(equality):
+        print("égalité !")
+        winner = ""
+    elif(turn == 2 and not equality):
+        print(B + j1_name + W + " a gagné ")
+        winner = j1_name
+    elif(turn == 1 and not equality):
+        print(R + j2_name + W + " a gagné ")
+        winner = j2_name
+        print("---------------------------------------------")
+
+    return winner
+
 def LaunchGame_puissance4(j1_name : str, j2_name : str)->str:
 
     cases : list[list[str]]
 
     turn : int
-    choice : str
-
     winner : str
 
     gameFinished : bool
-
     equality : bool
-    i : int
     lignes : int
     jeton : int
 
     winCases : list[int]
+    listChoices : list[int]
 
-    W  = '\033[0m'  # white (normal)
     R  = '\033[91m' # red
     B  = '\033[94m' # blue
 
@@ -76,7 +201,6 @@ def LaunchGame_puissance4(j1_name : str, j2_name : str)->str:
     winCases = []
 
     #intialise les données
-
     turn = 1
     gameFinished = False
     equality = False
@@ -89,99 +213,32 @@ def LaunchGame_puissance4(j1_name : str, j2_name : str)->str:
     jeton = 42
     while not gameFinished:
 
-        while True:
+        listChoices = []
+        while len(listChoices) == 0 :
 
             #affiche le menu
             __afficherMenu(cases, winCases)
 
-            #demande le choix de l'utilisateur
-            if(turn == 1): choice = str(input(B + j1_name + W + " choisissez votre case en suivant le schéma ci dessus : "))
-            else: choice = str(input(R + j2_name + W + " choisissez votre case en suivant le schéma ci dessus : "))
+            if(turn == 1): listChoices = __askForPlayerAction(cases, j1_name, B)
+            else: listChoices = __askForPlayerAction(cases, j2_name, R)
 
-            #vérifie la valeur de l'utilisateur
-            lignes = 5
-            if(not choice.isdigit()):print("Valeur impossible")
-            elif(int(choice) < 1 or int(choice) > 7):print("Valeur impossible")
-            elif(cases[6][int(choice) - 1] == "."):
-                lignes = 6
-                break
-            elif (cases[lignes][int(choice) - 1] == "0" or cases[lignes][int(choice) - 1] == "O") :
-                lignes = 4
-                if (cases[lignes][int(choice) - 1] == "0" or cases[lignes][int(choice) - 1] == "O"):
-                    lignes = 3
-                    if (cases[lignes][int(choice) - 1] == "0" or cases[lignes][int(choice) - 1] == "O") :
-                        lignes = 2
-                        if (cases[lignes][int(choice) - 1] == "0" or cases[lignes][int(choice) - 1] == "O"):
-                            lignes = 1
-                            if (cases[lignes][int(choice) - 1] == "0" or cases[lignes][int(choice) - 1] == "O"):
-                                lignes = 0
-                            else:
-                                break
-                        else:
-                            break
-                    else:
-                        break
-                else:
-                        break
-            else:
-                lignes = 5
-                break
-            os.system("pause")
-
+        choice = listChoices[0]
+        lignes = listChoices[1]
 
         #ajoute le symbole dans la case souhaité
         if(turn == 1):
-            cases[lignes][int(choice) - 1] = '0'
+            cases[lignes][choice - 1] = '0'
             jeton -= 1
         elif(turn == 2):
-            cases[lignes][int(choice) - 1] = 'O'
+            cases[lignes][choice - 1] = 'O'
             jeton -= 1
 
         #Vérification de victoire :
-
-        for i in range(0,4):
-            for j in range(6,2,-1):
-                if (cases[i][j] == cases[i+1][j-1] and cases[i+1][j-1] == cases[i+2][j-2] and cases[i+2][j-2] == cases[i+3][j-3] and not cases[i+1][j-1] == "."):
-                    gameFinished = True
-
-                    winCases.append(i * 7 + j)
-                    winCases.append((i+1) * 7 + j+1)
-                    winCases.append((i+2) * 7 + j+2)
-                    winCases.append((i+3) * 7 + j+3)
-
-        for i in range(0,4):
-            for j in range(0,7):
-                if (cases[j][i] == cases[j][i+1] and cases[j][i+1] == cases[j][i+2] and cases[j][i+2] == cases[j][i+3] and not cases[j][i] == "."):
-                    gameFinished = True
-
-                    winCases.append(j * 7 + i)
-                    winCases.append(j * 7 + i+1)
-                    winCases.append(j * 7 + i+2)
-                    winCases.append(j * 7 + i+3)
-
-        for i in range(0,4):
-            for j in range(0,7):
-                if (cases[i][j] == cases[i+1][j] and cases[i+1][j] == cases [i+2][j] and cases[i+2][j] == cases[i+3][j] ) and (not cases[i][j] == "." and not cases[i+1][j] == "." and not cases[i+2][j] == "." and not cases[i+3][j] == "."):
-                    gameFinished = True
-
-                    winCases.append(i * 7 + j)
-                    winCases.append((i+1) * 7 + j)
-                    winCases.append((i+2) * 7 + j)
-                    winCases.append((i+3) * 7 + j)
-
-        for i in range(0,4):
-            for j in range(0,4):
-                if ((cases[i][j] == cases[i+1][j+1] and cases[i+1][j+1] == cases [i+2][j+2] and cases[i+2][j+2] == cases[i+3][j+3]) and (not cases[i][j] == "." and not cases[i+1][j+1] == "." and not cases[i+2][j+2] == "." and not cases[i+3][j+3] == ".")):
-                    gameFinished = True
-
-                    winCases.append(i * 7 + j)
-                    winCases.append((i+1) * 7 + j+1)
-                    winCases.append((i+2) * 7 + j+2)
-                    winCases.append((i+3) * 7 + j+3)
+        winCases = __checkWin(cases)
+        if(len(winCases) > 0): gameFinished = True
 
         #Changement de tour :
-        if(turn == 1): turn = 2
-        else: turn = 1
+        turn = __changeTurn(turn)
 
         #Vérification d'égalité si pas de victoire :
         if(not gameFinished):
@@ -191,32 +248,12 @@ def LaunchGame_puissance4(j1_name : str, j2_name : str)->str:
             else:
                 equality = False
 
-            if(equality):gameFinished = True
+            if(equality): gameFinished = True
 
         #Fin de Partie:
 
         if(gameFinished):
-            print("---------------------------------------------")
-            print("Partie terminée : ")
-            __afficherMenu(cases, winCases)
-
-            #Affichage de la grille finale avec les couleurs de victoire (les cases de victoires sont en vert)
-                #aussi à faire
-            #__affichage_Fin(cases, wintype)
-
-            #Affichage du vainqueur et augmentation du score ou affichage du texte d'égalité
-
-            if(equality):
-                print("égalité !")
-                winner = ""
-            elif(turn == 2 and not equality):
-                print(B + j1_name + W + " a gagné ")
-                winner = j1_name
-            elif(turn == 1 and not equality):
-                print(R + j2_name + W + " a gagné ")
-                winner = j2_name
-            print("---------------------------------------------")
-            print(winCases)
+            winner = affichageFin(equality, turn, j1_name, j2_name, cases, winCases)
 
     os.system("pause")
     return winner
