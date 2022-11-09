@@ -5,7 +5,17 @@ import Jeux.P4 as P4
 import Jeux.Devinette as Devinette
 from Classes.Joueur import joueur
 
-def getJoueurs(fichier : str)->list[joueur]:
+
+#----------------------------------------
+#Récupère dans le fichier donné en entrée les joueurs et en fait un liste
+#
+#private : variable accessible uniquement dans le script actuel
+#
+#Entrée : (fichier) str
+#
+#Sortie : list[joueur]
+#----------------------------------------
+def __getJoueurs(fichier : str)->list[joueur]:
 
     listJoueurs : list[joueur]
 
@@ -21,7 +31,16 @@ def getJoueurs(fichier : str)->list[joueur]:
 
     return listJoueurs
 
-def afficher_menu_1():
+#----------------------------------------
+#Affiche le menu numéro 1
+#
+#private : variable accessible uniquement dans le script actuel
+#
+#Entrée : aucune
+#
+#Sortie : affichage
+#----------------------------------------
+def __afficher_menu_1():
 
     os.system("cls")
     print("---------------------")
@@ -33,7 +52,16 @@ def afficher_menu_1():
     print("                     ")
     print("---------------------")
 
-def afficher_menu_2():
+#----------------------------------------
+#Affiche le menu numéro 2
+#
+#private : variable accessible uniquement dans le script actuel
+#
+#Entrée : aucune
+#
+#Sortie : affichage
+#----------------------------------------
+def __afficher_menu_2():
 
     os.system("cls")
     print("---------------------")
@@ -48,7 +76,16 @@ def afficher_menu_2():
     print("                     ")
     print("---------------------")
 
-def afficher_menu_3():
+#----------------------------------------
+#Affiche le menu numéro 3
+#
+#private : variable accessible uniquement dans le script actuel
+#
+#Entrée : aucune
+#
+#Sortie : affichage
+#----------------------------------------
+def __afficher_menu_3():
 
     os.system("cls")
     print("---------------------")
@@ -63,7 +100,16 @@ def afficher_menu_3():
     print("                     ")
     print("---------------------")
 
-def afficher_scores(listJoueur : list[joueur], nom : str):
+#----------------------------------------
+#Affiche les scores d'un jeu pour tout les joueurs, classé dans l'ordre croissant
+#
+#private : variable accessible uniquement dans le script actuel
+#
+#Entrée : list[joueur], str (le nom du jeu souhaité)
+#
+#Sortie : affichage
+#----------------------------------------
+def __afficher_scores(listJoueur : list[joueur], nom : str):
 
     os.system("cls")
     print("---------------------")
@@ -89,7 +135,16 @@ def afficher_scores(listJoueur : list[joueur], nom : str):
     print("---------------------")
     os.system("pause")
 
-def ajouterScore(winner : str, jeu : str, listJoueur : list[joueur]):
+#----------------------------------------
+#Ajoute un point a un joueur souhaité, designé par son nom, dans le jeu souhaité
+#
+#private : variable accessible uniquement dans le script actuel
+#
+#Entrée : str (le nom du joueur), str (le nom du jeu souhaité), list[joueur]
+#
+#Sortie : Modification du fichier texte en ajoutant un point au joueur souhaité
+#----------------------------------------
+def __ajouterScore(winner : str, jeu : str, listJoueur : list[joueur]):
 
     playerFound : bool
 
@@ -111,10 +166,19 @@ def ajouterScore(winner : str, jeu : str, listJoueur : list[joueur]):
         elif(jeu == "puissance4"): listJoueurs.append(joueur(winner, 1, 0, 0, 0))
         else: print("Jeu erreur")
 
-    writePlayersData(listJoueurs)
+    __writePlayersData(listJoueurs)
 
 
-def writePlayersData(listJoueur : list[joueur]):
+#----------------------------------------
+#Ecris les données des joueurs dans le fichier ./Scores/playersData.txt
+#
+#private : variable accessible uniquement dans le script actuel
+#
+#Entrée : list[joueur]
+#
+#Sortie : Modification du fichier texte en fonction de la list de joueur
+#----------------------------------------
+def __writePlayersData(listJoueur : list[joueur]):
 
     _i : int
 
@@ -145,11 +209,11 @@ if __name__ == "__main__":
     j1_name = str(input(B + "Joueur 1" + W + ", quel est votre nom ? "))
     j2_name = str(input(R + "Joueur 2" + W + ", quel est votre nom ? "))
 
-    listJoueurs = getJoueurs("./Scores/playersData.txt")
+    listJoueurs = __getJoueurs("./Scores/playersData.txt")
 
     while True :
 
-        afficher_menu_1()
+        __afficher_menu_1()
 
         choice = str(input("Choisissez le jeu : "))
 
@@ -159,7 +223,7 @@ if __name__ == "__main__":
 
                  while True :
 
-                    afficher_menu_2()
+                    __afficher_menu_2()
 
                     choice = str(input("Choisissez le jeu : "))
 
@@ -167,19 +231,19 @@ if __name__ == "__main__":
 
                         case "1":
                             winner = Devinette.LaunchGame_devinettes(j1_name,j2_name)
-                            if(not winner == ""): ajouterScore(winner, "devinette", listJoueurs)
+                            if(not winner == ""): __ajouterScore(winner, "devinette", listJoueurs)
 
                         case "2":
                             winner = Allumettes.LaunchGame_allumettes(j1_name, j2_name)
-                            if(not winner == ""): ajouterScore(winner, "allumettes", listJoueurs)
+                            if(not winner == ""): __ajouterScore(winner, "allumettes", listJoueurs)
 
                         case "3":
                             winner = Morpion.LaunchGame_morpion(j1_name, j2_name)
-                            if(not winner == ""): ajouterScore(winner, "morpion", listJoueurs)
+                            if(not winner == ""): __ajouterScore(winner, "morpion", listJoueurs)
 
                         case "4":
                             winner = P4.LaunchGame_puissance4(j1_name, j2_name)
-                            if(not winner == ""): ajouterScore(winner, "puissance4", listJoueurs)
+                            if(not winner == ""): __ajouterScore(winner, "puissance4", listJoueurs)
 
 
                         case "5":
@@ -192,23 +256,23 @@ if __name__ == "__main__":
             case "2":
                 while True :
 
-                    afficher_menu_3()
+                    __afficher_menu_3()
 
                     choice = str(input("Choisissez le jeu : "))
 
                     match choice:
 
                         case "1":
-                            afficher_scores(listJoueurs, "devinette")
+                            __afficher_scores(listJoueurs, "devinette")
 
                         case "2":
-                            afficher_scores(listJoueurs, "allumettes")
+                            __afficher_scores(listJoueurs, "allumettes")
 
                         case "3":
-                            afficher_scores(listJoueurs, "morpion")
+                            __afficher_scores(listJoueurs, "morpion")
 
                         case "4":
-                            afficher_scores(listJoueurs, "puissance4")
+                            __afficher_scores(listJoueurs, "puissance4")
 
                         case "5":
                             break
