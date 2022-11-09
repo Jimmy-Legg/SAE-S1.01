@@ -1,5 +1,14 @@
 import os
 
+#----------------------------------------
+#Affiche l'ecran de fin de partie
+#
+#private : cette fonction n'est utile que pour ce script
+#
+#Entrée : winner : str, couleur : str
+#
+#Sortie : affichage
+#----------------------------------------
 def __afficherFin(winner : str, couleur : str):
 
     W  = '\033[0m'  # white (normal)
@@ -11,6 +20,15 @@ def __afficherFin(winner : str, couleur : str):
     print("")
     print("---------------------")
 
+#----------------------------------------
+#Affiche a l'utilisateur la partie en cours et lui demande combien il veut enlever d'allumettes. Si le choix est erroné, le redemande
+#
+#private : cette fonction n'est utile que pour ce script
+#
+#Entrée : table : list[str], j_name : str, couleur :str
+#
+#Sortie : int (le nombre d'allumettes a enlever)
+#----------------------------------------
 def __getAmount(table : list[str], j_name : str, couleur :str)->int:
 
     mot : str
@@ -57,11 +75,27 @@ def __getAmount(table : list[str], j_name : str, couleur :str)->int:
 
     return int(choix)
 
+#----------------------------------------
+#Change le tour
+#
+#private : variable accessible uniquement dans le script actuel
+#
+#Entrée : int
+#
+#Sortie : int
+#----------------------------------------
 def __changeTurn(turn : int)->int:
     if(turn == 1): turn = 2
     else: turn = 1
     return turn
 
+#----------------------------------------
+#Lance la partie d'allumettes et retourne le vainqueur de la partie
+#
+#Entrée : j1_name : str, j2_name : str
+#
+#Sortie : str
+#----------------------------------------
 def LaunchGame_allumettes(j1_name : str, j2_name : str):
 
     turn : int
