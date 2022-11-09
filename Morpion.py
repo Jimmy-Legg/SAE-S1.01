@@ -193,7 +193,13 @@ def __affichageFin(cases : list[str], winType : int):
 
     print("---------------------------------------------")
 
-
+#----------------------------------------
+#Lance la partie de morpion et retourne le vainqueur de la partie
+#
+#Entrée : j1_name : str, j2_name : str
+#
+#Sortie : str
+#----------------------------------------
 def LaunchGame_morpion(j1_name : str, j2_name : str)->str:
 
     cases : list[str]
