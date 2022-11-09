@@ -87,7 +87,7 @@ def __afficherMenu(cases : list[list[str]], winCases : list[int]):
     os.system("cls")
     print("---------------------------------------------")
     print("Schéma :")
-    print(__couleur(cases[0][0], 0, winCases) + cases[0][0] + W + " | " + __couleur(cases[0][1], 1, winCases) + cases[0][1] + W + " | " + __couleur(cases[0][2], 2, winCases) + cases[0][2] + W + " | " + __couleur(cases[0][3], 3, winCases) + cases[0][3] + W + " | " + __couleur(cases[0][4], 4, winCases) + cases[0][4] + W + " | " + __couleur(cases[0][5], 5, winCases) + cases[0][5] + W +  " | " + __couleur(cases[0][6], 6, winCases) + cases[0][6] + W)
+    print("          " + __couleur(cases[0][0], 0, winCases) + cases[0][0] + W + " | " + __couleur(cases[0][1], 1, winCases) + cases[0][1] + W + " | " + __couleur(cases[0][2], 2, winCases) + cases[0][2] + W + " | " + __couleur(cases[0][3], 3, winCases) + cases[0][3] + W + " | " + __couleur(cases[0][4], 4, winCases) + cases[0][4] + W + " | " + __couleur(cases[0][5], 5, winCases) + cases[0][5] + W +  " | " + __couleur(cases[0][6], 6, winCases) + cases[0][6] + W)
     __afficherPartie(cases, winCases)
 
 def __afficherPartie(cases : list[list[str]], winCases : list[int]):
@@ -98,7 +98,7 @@ def __afficherPartie(cases : list[list[str]], winCases : list[int]):
     print("Partie :")
 
     for i in range(1,7):
-        print(__couleur(cases[i][0], i*7, winCases) + cases[i][0] + W + " | " + __couleur(cases[i][1], i*7+1, winCases) + cases[i][1] + W + " | " + __couleur(cases[i][2], i*7+2, winCases) + cases[i][2] + W + " | " + __couleur(cases[i][3], i*7+3, winCases) + cases[i][3] + W + " | " + __couleur(cases[i][4], i*7+4, winCases) + cases[i][4] + W + " | " + __couleur(cases[i][5], i*7+5, winCases) + cases[i][5] + W +  " | " + __couleur(cases[i][6], i*7+6, winCases) + cases[i][6] + W)
+        print("          " + __couleur(cases[i][0], i*7, winCases) + cases[i][0] + W + " | " + __couleur(cases[i][1], i*7+1, winCases) + cases[i][1] + W + " | " + __couleur(cases[i][2], i*7+2, winCases) + cases[i][2] + W + " | " + __couleur(cases[i][3], i*7+3, winCases) + cases[i][3] + W + " | " + __couleur(cases[i][4], i*7+4, winCases) + cases[i][4] + W + " | " + __couleur(cases[i][5], i*7+5, winCases) + cases[i][5] + W +  " | " + __couleur(cases[i][6], i*7+6, winCases) + cases[i][6] + W)
 
     print("---------------------------------------------")
 
@@ -160,7 +160,8 @@ def affichageFin(equality : bool, turn : int, j1_name : str, j2_name : str, case
     os.system("cls")
 
     print("---------------------------------------------")
-    print(O + "Partie terminée : " + W)
+    print("               " + O + "Partie terminée" + W)
+    print("")
 
     __afficherPartie(cases, winCases)
 
