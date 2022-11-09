@@ -251,6 +251,13 @@ def __askForMini():
 
     return int(mini)
 
+#----------------------------------------
+#Lance la partie de devinettes et retourne le vainqueur de la partie
+#
+#Entrée : j1_name : str, j2_name : str
+#
+#Sortie : str
+#----------------------------------------
 def LaunchGame_devinettes(j1_name : str, j2_name : str)->str:
 
     nombre_a_trouver : int
