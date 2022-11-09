@@ -93,6 +93,7 @@ def __checkWin(cases : list[str])->list[bool | int]:
         gameFinished = True
     elif(cases[2] == cases[5] and cases[5] == cases[8] and not cases[2] == "."):
         winType = 8
+        gameFinished = True
     else:
         winType = 0
         gameFinished = False
@@ -113,17 +114,17 @@ def __afficherMenu(j1_name : str, j2_name : str, cases : list[str]):
     os.system("cls")
 
     W  = '\033[0m'  # white (normal)
-
-    print("---------------------------------------------")
+    
+    print("--------------------------------------------")
     print("Schéma :")
-    print("7 | 8 | 9")
-    print("4 | 5 | 6")
-    print("1 | 2 | 3")
+    print("                 7 | 8 | 9")
+    print("                 4 | 5 | 6")
+    print("                 1 | 2 | 3")
     print("---------------------------------------------")
     print("Partie :")
-    print(__couleur(cases[6]) + cases[6] + W + " | " + __couleur(cases[7]) + cases[7] + W + " | " + __couleur(cases[8]) + cases[8] + W)
-    print(__couleur(cases[3]) + cases[3] + W + " | " + __couleur(cases[4]) + cases[4] + W + " | " + __couleur(cases[5]) + cases[5] + W)
-    print(__couleur(cases[0]) + cases[0] + W + " | " + __couleur(cases[1]) + cases[1] + W + " | " + __couleur(cases[2]) + cases[2] + W)
+    print("                 " + __couleur(cases[6]) + cases[6] + W + " | " + __couleur(cases[7]) + cases[7] + W + " | " + __couleur(cases[8]) + cases[8] + W)
+    print("                 " + __couleur(cases[3]) + cases[3] + W + " | " + __couleur(cases[4]) + cases[4] + W + " | " + __couleur(cases[5]) + cases[5] + W)
+    print("                 " + __couleur(cases[0]) + cases[0] + W + " | " + __couleur(cases[1]) + cases[1] + W + " | " + __couleur(cases[2]) + cases[2] + W)
     print("---------------------------------------------")
 
 
@@ -143,13 +144,13 @@ def __affichageFin(cases : list[str], winType : int):
 
     W  = '\033[0m'  # white (normal)
     G  = '\033[92m' # green
-
+    os.system("cls")
     print("---------------------------------------------")
     print("Partie terminée : ")
 
-    mot = ""
+    mot = "                 "
     if((winType == 2) or (winType == 5) or (winType == 6)): mot += G
-    else: mot += __couleur(cases[6])
+    else: mot +=  __couleur(cases[6])
     mot += cases[6] + W + " | "
     if((winType == 5) or (winType == 7)): mot += G
     else: mot += __couleur(cases[7])
@@ -159,7 +160,7 @@ def __affichageFin(cases : list[str], winType : int):
     mot += cases[8] + W
     print(mot)
 
-    mot = ""
+    mot = "                 "
     if((winType == 4) or (winType == 6)): mot += G
     else: mot += __couleur(cases[3])
     mot += cases[3] + W + " | "
@@ -171,7 +172,7 @@ def __affichageFin(cases : list[str], winType : int):
     mot += cases[5] + W
     print(mot)
 
-    mot = ""
+    mot = "                 "
     if((winType == 1) or (winType == 3) or (winType == 6)): mot += G
     else: mot += __couleur(cases[0])
     mot += cases[0] + W + " | "
