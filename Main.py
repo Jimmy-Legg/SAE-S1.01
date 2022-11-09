@@ -84,19 +84,18 @@ def afficher_scores(listJoueur : list[joueur], nom : str):
 
     #pyright: reportUnknownArgumentType=false
     for k in range(len(scores)-1, -1, -1):
-        print(scores[k][0] + " : " + str(scores[k][1]))
-
+        if(scores[k][1] != 0):print(scores[k][0] + " : " + str(scores[k][1]))
     print("                     ")
     print("---------------------")
     os.system("pause")
 
-def ajouterScore(winner : str, score : int, jeu : str, listJoueur : list[joueur]):
+def ajouterScore(winner : str, jeu : str, listJoueur : list[joueur]):
 
     playerFound : bool
 
     playerFound = False
 
-    for j in listJoueurs:
+    for j in listJoueur:
         if(j.getName() == winner):
             if(jeu == "devinette"):j.setScoreDevinette(j.getScoreDevinette() + 1)
             elif(jeu == "allumettes"):j.setScoreAllumettes(j.getScoreAllumettes() + 1)
@@ -113,6 +112,7 @@ def ajouterScore(winner : str, score : int, jeu : str, listJoueur : list[joueur]
         else: print("Jeu erreur")
 
     writePlayersData(listJoueurs)
+
 
 def writePlayersData(listJoueur : list[joueur]):
 
@@ -167,19 +167,19 @@ if __name__ == "__main__":
 
                         case "1":
                             winner = Devinette.LaunchGame_devinettes(j1_name,j2_name)
-                            if(not winner == ""): ajouterScore(winner, 1, "devinette", listJoueurs)
+                            if(not winner == ""): ajouterScore(winner, "devinette", listJoueurs)
 
                         case "2":
                             winner = Allumettes.LaunchGame_allumettes(j1_name, j2_name)
-                            if(not winner == ""): ajouterScore(winner, 1, "allumettes", listJoueurs)
+                            if(not winner == ""): ajouterScore(winner, "allumettes", listJoueurs)
 
                         case "3":
                             winner = Morpion.LaunchGame_morpion(j1_name, j2_name)
-                            if(not winner == ""): ajouterScore(winner, 1, "morpion", listJoueurs)
+                            if(not winner == ""): ajouterScore(winner, "morpion", listJoueurs)
 
                         case "4":
                             winner = P4.LaunchGame_puissance4(j1_name, j2_name)
-                            if(not winner == ""): ajouterScore(winner, 1, "puissance4", listJoueurs)
+                            if(not winner == ""): ajouterScore(winner, "puissance4", listJoueurs)
 
 
                         case "5":
