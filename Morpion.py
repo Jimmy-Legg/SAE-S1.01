@@ -112,14 +112,15 @@ def __checkWin(cases : list[str])->list[bool | int]:
 def __afficherMenu(j1_name : str, j2_name : str, cases : list[str]):
 
     os.system("cls")
-
+    
+    N  = '\033[90m' # noir
     W  = '\033[0m'  # white (normal)
     
     print("--------------------------------------------")
-    print("Schéma :")
+    print(N +"Schéma :")
     print("                 7 | 8 | 9")
     print("                 4 | 5 | 6")
-    print("                 1 | 2 | 3")
+    print("                 1 | 2 | 3" + W)
     print("---------------------------------------------")
     print("Partie :")
     print("                 " + __couleur(cases[6]) + cases[6] + W + " | " + __couleur(cases[7]) + cases[7] + W + " | " + __couleur(cases[8]) + cases[8] + W)
@@ -144,7 +145,13 @@ def __affichageFin(cases : list[str], winType : int):
 
     W  = '\033[0m'  # white (normal)
     G  = '\033[92m' # green
+    N  = '\033[90m' # noir
     os.system("cls")
+    print("--------------------------------------------")
+    print( N + "Schéma :")
+    print("                 7 | 8 | 9")
+    print("                 4 | 5 | 6")
+    print("                 1 | 2 | 3" + W)
     print("---------------------------------------------")
     print("Partie terminée : ")
 
