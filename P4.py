@@ -90,6 +90,15 @@ def __afficherMenu(cases : list[list[str]], winCases : list[int]):
     print("          " + __couleur(cases[0][0], 0, winCases) + cases[0][0] + W + " | " + __couleur(cases[0][1], 1, winCases) + cases[0][1] + W + " | " + __couleur(cases[0][2], 2, winCases) + cases[0][2] + W + " | " + __couleur(cases[0][3], 3, winCases) + cases[0][3] + W + " | " + __couleur(cases[0][4], 4, winCases) + cases[0][4] + W + " | " + __couleur(cases[0][5], 5, winCases) + cases[0][5] + W +  " | " + __couleur(cases[0][6], 6, winCases) + cases[0][6] + W)
     __afficherPartie(cases, winCases)
 
+#----------------------------------------
+#Affiche la partie en cours
+#
+#private : cette fonction n'est utile que pour ce script
+#
+#Entrée : cases : list[list[str]], winCases : list[int]
+#
+#Sortie : affichage
+#----------------------------------------
 def __afficherPartie(cases : list[list[str]], winCases : list[int]):
 
     W  = '\033[0m'  # white (normal)
@@ -102,6 +111,15 @@ def __afficherPartie(cases : list[list[str]], winCases : list[int]):
 
     print("---------------------------------------------")
 
+#----------------------------------------
+#Demande a l'utilisateur d'entrer dans quelle colonne il veut placer son pion, si l'entrée n'est pas bonne le lui redemande
+#
+#private : cette fonction n'est utile que pour ce script
+#
+#Entrée : cases : list[list[str]], j_name : str, couleur : str
+#
+#Sortie : list[int]
+#----------------------------------------
 def __askForPlayerAction(cases : list[list[str]], j_name : str, couleur : str)->list[int]:
 
     R  = '\033[91m' # red
@@ -148,7 +166,17 @@ def __askForPlayerAction(cases : list[list[str]], j_name : str, couleur : str)->
 
     return[int(choice), lignes] #pyright: reportUnboundVariable=false
 
-def affichageFin(equality : bool, turn : int, j1_name : str, j2_name : str, cases : list[list[str]], winCases : list[int])->str:
+
+#----------------------------------------
+#Affiche l'ecran de fin de partie et retourne le gagnant de la partie
+#
+#private : cette fonction n'est utile que pour ce script
+#
+#Entrée : equality : bool, turn : int, j1_name : str, j2_name : str, cases : list[list[str]], winCases : list[int]
+#
+#Sortie : str
+#----------------------------------------
+def __affichageFin(equality : bool, turn : int, j1_name : str, j2_name : str, cases : list[list[str]], winCases : list[int])->str:
 
     W  = '\033[0m'  # white (normal)
     R  = '\033[91m' # red
@@ -178,6 +206,13 @@ def affichageFin(equality : bool, turn : int, j1_name : str, j2_name : str, case
 
     return winner
 
+#----------------------------------------
+#Lance la partie de puissance 4 et retourne le vainqueur de la partie
+#
+#Entrée : j1_name : str, j2_name : str
+#
+#Sortie : str
+#----------------------------------------
 def LaunchGame_puissance4(j1_name : str, j2_name : str)->str:
 
     cases : list[list[str]]
@@ -254,7 +289,7 @@ def LaunchGame_puissance4(j1_name : str, j2_name : str)->str:
         #Fin de Partie:
 
         if(gameFinished):
-            winner = affichageFin(equality, turn, j1_name, j2_name, cases, winCases)
+            winner = __affichageFin(equality, turn, j1_name, j2_name, cases, winCases)
 
     os.system("pause")
     return winner
