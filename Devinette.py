@@ -1,9 +1,8 @@
 import os
 import time
 
-
 #----------------------------------------
-# Demande au deuxième joueur les hypothèses sur le nombre entré par le premier 
+# Demande au deuxième joueur les hypothèses sur le nombre entré par le premier
 #
 #private : variable accessible uniquement dans le script actuel
 #
@@ -15,21 +14,37 @@ def __LaunchTurn(nombre_a_trouver : int, couleur : str, couleur1 : str, j_name :
 
     choix : str
     nombre : int
-    R  = '\033[91m' # r
+
     W  = '\033[0m'  # white (normal)
+    R  = '\033[91m' # r
+    N  = '\033[90m' # noir
+    O  = '\033[93m' # yellow
+    P  = '\033[95m' # purple
+    G  = '\033[92m' # green
 
     os.system("cls")
-    print(couleur + j_name + W + " à vous de jouer !")
+    print("-----------------------------------")
+    print(couleur + j_name + W + " à vous de jouer !" + N + " (Appuyez pour lancer le chronomètre)" + W)
+    print("-----------------------------------")
+    print("Nombre entre " + O + str(mini) + W + " et " + P + str(maxi) + W + " : ")
     os.system("pause")
+    os.system("cls")
 
     temps = time.time()
 
+    print("-----------------------------------")
+    print(couleur + j_name + W + " à vous de jouer !")
+    print("-----------------------------------")
+
     while True:
 
-        print("Nombre entre " + str(mini) + " et " + str(maxi) + " : ")
+        print("Nombre entre " + O + str(mini) + W + " et " + P + str(maxi) + W + " : ")
         choix = input("Faites une première hypothèse : ")
-        if(not str(choix).isdigit()):print(R + "Valeur impossible" + W),os.system("pause"),os.system("cls")
-        elif(int(choix) < int(mini) or int(choix) > int(maxi)):print(R + "Valeur impossible" + W),os.system("pause"),os.system("cls")
+        if(not str(choix).isdigit() or int(choix) < int(mini) or int(choix) > int(maxi)):
+            os.system("cls")
+            print("-----------------------------------")
+            print(couleur + j_name + W + " à vous de jouer ! " + R + "Valeur impossible" + W)
+            print("-----------------------------------")
         else:
             nombre = int(choix)
             break
@@ -41,43 +56,36 @@ def __LaunchTurn(nombre_a_trouver : int, couleur : str, couleur1 : str, j_name :
             temps = time.time()-temps
             break
 
-        elif nombre < nombre_a_trouver:
-
+        else:
             os.system("cls")
-            print(couleur + j_name + W + " : ")
-            print("Nombre entre " + str(mini) + " et " + str(maxi) + " : ")
 
+
+            print("-----------------------------------")
+            print(couleur + j_name + W + " à vous de jouer !")
+            print("-----------------------------------")
             while True:
 
-                choix = input(couleur1 + p_name + W + " dit que c'est un nombre plus grand que " + str(nombre) + " : ")
-                if(not str(choix).isdigit()): print(R + "Valeur impossible" + W),os.system("pause"),os.system("cls")
-                elif(int(choix) < int(mini) or int(choix) > int(maxi)): print(R + "Valeur impossible" + W),os.system("pause"),os.system("cls")
+                print("Nombre entre " + O + str(mini) + W + " et " + P + str(maxi) + W + " : ")
+                if(nombre > nombre_a_trouver): choix = input(couleur1 + p_name + W + " dit que c'est un nombre plus " + O + "petit " + W + "que " + G + str(nombre) + W + " : ")
+                if(nombre < nombre_a_trouver): choix = input(couleur1 + p_name + W + " dit que c'est un nombre plus " + P + "grand " + W + "que " + G + str(nombre) + W + " : ")
+                if(not str(choix).isdigit() or int(choix) < int(mini) or int(choix) > int(maxi)):
+                    os.system("cls")
+                    print("-----------------------------------")
+                    print(couleur + j_name + W + " à vous de jouer ! " + R + "Valeur impossible" + W)
+                    print("-----------------------------------")
                 else:
                     nombre = int(choix)
+                    if(nombre_a_trouver != nombre_a_trouver): os.system("cls")
                     break
-
-        elif nombre > nombre_a_trouver:
-
-            os.system("cls")
-            print(couleur + j_name + W + " : ")
-            print("nombre entre " + str(mini) + " et " + str(maxi) + " : ")
-
-            while True:
-
-                choix = input(couleur1 + p_name + W + " dit que c'est un nombre plus petit que " + str(nombre) + " : ")
-                if(not str(choix).isdigit()): print(R + "Valeur impossible" + W),os.system("pause"),os.system("cls")
-                elif(int(choix) < int(mini) or int(choix) > int(maxi)): print(R + "Valeur impossible" + W),os.system("pause"),os.system("cls")
-                else:
-                    nombre = int(choix)
-                    break
-
-    print('\033[93m' + "Trouvé !" + W)
+    
+    print("-----------------------------------")
+    print(G + "Trouvé ! " + W + "Le nombre était bien : " + G + str(nombre_a_trouver) + W)
+    print("-----------------------------------")
     os.system("pause")
     return temps
 
-
 #----------------------------------------
-#Demande le nombre que l'autre joueur doit trouver 
+#Demande le nombre que l'autre joueur doit trouver
 #
 #private : variable accessible uniquement dans le script actuel
 #
@@ -88,17 +96,22 @@ def __LaunchTurn(nombre_a_trouver : int, couleur : str, couleur1 : str, j_name :
 def __askNombreATrouver(couleur : str, j_name : str, mini : int, maxi : int)->int:
 
     choix : str
-    R  = '\033[91m' # r
+
     W  = '\033[0m'  # white (normal)
+    R  = '\033[91m' # red
+    O  = '\033[93m' # yellow
+    P  = '\033[95m' # purple
 
     os.system("cls")
-    print("A " + couleur + j_name + W + " de choisir un nombre")
+    print("Tour de " + couleur + j_name + W + " :")
 
     while True:
-        choix = str(input(couleur + j_name + W + "  choisissez un nombre entre " + str(mini) + " et " + str(maxi) + " : "))
-        if(not choix.isdigit()): print(R + "Valeur impossible" + W),os.system("pause"),os.system("cls")
-        elif(int(choix) < int(mini) or int(choix) > int(maxi)):print(R + "Valeur impossible" + W),os.system("pause"),os.system("cls")
-        else:break
+        choix = str(input("Choisissez un nombre entre " + O + str(mini) + W + " et " + P + str(maxi) + W + " : "))
+        if(not choix.isdigit() or int(choix) < int(mini) or int(choix) > int(maxi)):
+            os.system("cls")
+            print("Tour de " + couleur + j_name + W + " :")
+            print(R + "Valeur impossible" + W)
+        else: break
 
     return int(choix)
 
@@ -113,8 +126,8 @@ def __askNombreATrouver(couleur : str, j_name : str, mini : int, maxi : int)->in
 #Sortie : Gagnant : str
 #----------------------------------------
 def __checkWin(temps1:float,temps2:float, j1_name : str, j2_name : str)->str:
+
     os.system("cls")
-    winType : int
 
     B  = '\033[94m' # blue
     W  = '\033[0m'  # white (normal)
@@ -132,7 +145,7 @@ def __checkWin(temps1:float,temps2:float, j1_name : str, j2_name : str)->str:
         print("")
         print("---------------------------")
         os.system("pause")
-        winType = 1
+        winner =j1_name
 
     elif temps1 > temps2 :
         print("---------------------------")
@@ -144,12 +157,11 @@ def __checkWin(temps1:float,temps2:float, j1_name : str, j2_name : str)->str:
         print(B + str(j1_name) + W + " a terminé en : " + str(temps1)[0:4])
         print(R + str(j2_name) + W + " a terminé en : " + str(temps2)[0:4])
         print("")
-        print(print("---------------------------"))
+        print("---------------------------")
         os.system("pause")
-        winType = 2
-        
+        winner = j2_name
+
     else:
-        print("égalité")
         print("---------------------------")
         print("")
         print("égalité")
@@ -161,20 +173,13 @@ def __checkWin(temps1:float,temps2:float, j1_name : str, j2_name : str)->str:
         print("")
         print("---------------------------")
         os.system("pause")
-        winType = 0
-
-    if(winType == 0):
         winner = ""
-    elif(winType == 1):
-        winner = j1_name
-    elif(winType == 2):
-        winner = j2_name
 
     return winner
 
 
 #----------------------------------------
-# Demande le nombre Max que les joueurs vont pouvoir entrer 
+# Demande le nombre Max que les joueurs vont pouvoir entrer
 #
 #private : variable accessible uniquement dans le script actuel
 #
@@ -182,24 +187,41 @@ def __checkWin(temps1:float,temps2:float, j1_name : str, j2_name : str)->str:
 #
 #Sortie : Max : int
 #----------------------------------------
-def __askForMaxi():
+def __askForMaxi(mini : int):
 
     maxi : str
+    maxi_ok : bool
+
+    W  = '\033[0m'  # white (normal)
+    P  = '\033[95m' # purple
+    R  = '\033[91m' # red
+    O  = '\033[93m' # yellow
 
     os.system("cls")
-    maxi = str(input('Nombre max que lon peut rentrer : '))
+    maxi = input('Définissez le nombre ' + P + 'maximum' + W + ' que pourront entrez les joueurs : ')
 
+    maxi_ok = False
 
-    while(not maxi.isdigit()):
-        print("Valeur impossible")
-        maxi = str(input('Nombre max que lon peut rentrer : '))
-        os.system("pause")
+    while(not maxi_ok):
+
+        if(not maxi.isdigit()):
+            print(R + "Valeur impossible !" + W)
+            os.system("pause")
+            os.system("cls")
+            maxi = input('Définissez le nombre ' + P + 'maximum' + W + ' que pourront entrez les joueurs : ')
+        elif(int(maxi) <= mini):
+            print(R + "Le" + P + " Maximum" + R +" doit être plus élevé que le " + O +"minimum" + R + " !" + W)
+            os.system("pause")
+            os.system("cls")
+            maxi = input('Définissez le nombre ' + P + 'maximum' + W + ' que pourront entrez les joueurs : ')
+        else:
+            maxi_ok = True
 
     return int(maxi)
 
 
 #----------------------------------------
-# Demande le nombre Min que les joueurs vont pouvoir entrer 
+# Demande le nombre Min que les joueurs vont pouvoir entrer
 #
 #private : variable accessible uniquement dans le script actuel
 #
@@ -211,13 +233,21 @@ def __askForMini():
 
     mini : str
 
+    W  = '\033[0m'  # white (normal)
+    O  = '\033[93m' # yellow
+    R  = '\033[91m' # red
+
     os.system("cls")
-    mini = str(input('Nombre min que lon peut rentrer : '))
+
+    mini = str(input('Définissez le nombre ' + O + 'minimum' + W + ' que pourront entrez les joueurs : '))
 
     while(not mini.isdigit()):
-        print("Valeur impossible")
-        mini = str(input('Nombre min que lon peut rentrer : '))
+        print(R + "Valeur impossible" + W)
         os.system("pause")
+        os.system("cls")
+        print("")
+        mini = str(input('Définissez le nombre ' + O + 'minimum' + W + ' que pourront entrez les joueurs : '))
+
 
     return int(mini)
 
@@ -229,29 +259,24 @@ def LaunchGame_devinettes(j1_name : str, j2_name : str)->str:
     mini : int
     maxi : int
 
-    winner = ""
-
     B  = '\033[94m' # blue
     R  = '\033[91m' # r
 
-    maxi = __askForMaxi()
-
     mini = __askForMini()
+
+    maxi = __askForMaxi(mini)
 
     nombre_a_trouver = __askNombreATrouver(B, j1_name, mini, maxi)
 
-    temps1 = __LaunchTurn(nombre_a_trouver, R, B,j2_name,j1_name, mini, maxi)
+    temps1 = __LaunchTurn(nombre_a_trouver, R, B,j2_name, j1_name, mini, maxi)
 
     nombre_a_trouver = __askNombreATrouver(R, j2_name, mini, maxi)
 
     temps2 = __LaunchTurn(nombre_a_trouver, B, R, j1_name, j2_name, mini, maxi)
 
-    #Définition du vainqueur
-    winner = __checkWin(temps1, temps2, j1_name, j2_name)
+    #check et retour du vainqueur
+    return __checkWin(temps1, temps2, j1_name, j2_name)
 
-    #Retour
-    return winner
 
 if __name__ == "__main__":
-
-    LaunchGame_devinettes("Nathan", "Jimmy")
+    LaunchGame_devinettes("Nathan","Justin")
