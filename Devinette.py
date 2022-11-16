@@ -1,4 +1,5 @@
 import os
+import random
 import time
 
 #----------------------------------------
@@ -265,25 +266,33 @@ def LaunchGame_devinettes(j1_name : str, j2_name : str)->str:
     temps2 : float
     mini : int
     maxi : int
+    turn : int
 
     B  = '\033[94m' # blue
     R  = '\033[91m' # r
+
+    turn = random.randint(1,2)
 
     mini = __askForMini()
 
     maxi = __askForMaxi(mini)
 
-    nombre_a_trouver = __askNombreATrouver(B, j1_name, mini, maxi)
+    if turn == 1 :
+        nombre_a_trouver = __askNombreATrouver(B, j1_name, mini, maxi)
 
-    temps1 = __LaunchTurn(nombre_a_trouver, R, B,j2_name, j1_name, mini, maxi)
+        temps1 = __LaunchTurn(nombre_a_trouver, R, B,j2_name, j1_name, mini, maxi)
 
-    nombre_a_trouver = __askNombreATrouver(R, j2_name, mini, maxi)
+        nombre_a_trouver = __askNombreATrouver(R, j2_name, mini, maxi)
 
-    temps2 = __LaunchTurn(nombre_a_trouver, B, R, j1_name, j2_name, mini, maxi)
+        temps2 = __LaunchTurn(nombre_a_trouver, B, R, j1_name, j2_name, mini, maxi)
 
+    elif turn == 2 :
+        nombre_a_trouver = __askNombreATrouver(B, j2_name, mini, maxi)
+
+        temps1 = __LaunchTurn(nombre_a_trouver, R, B,j1_name, j2_name, mini, maxi)
+
+        nombre_a_trouver = __askNombreATrouver(R, j1_name, mini, maxi)
+
+        temps2 = __LaunchTurn(nombre_a_trouver, B, R, j2_name, j1_name, mini, maxi)
     #check et retour du vainqueur
     return __checkWin(temps1, temps2, j1_name, j2_name)
-
-
-if __name__ == "__main__":
-    LaunchGame_devinettes("Nathan","Justin")
