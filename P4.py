@@ -1,5 +1,5 @@
 import os
-
+import random
 #----------------------------------------
 #retourne la couleur d'un symbole sous forme str
 #
@@ -198,6 +198,7 @@ def __affichageFin(equality : bool, turn : int, j1_name : str, j2_name : str, ca
         winner = ""
     elif(turn == 2 and not equality):
         print(B + j1_name + W + " a gagné ")
+        print("---------------------------------------------")
         winner = j1_name
     elif(turn == 1 and not equality):
         print(R + j2_name + W + " a gagné ")
@@ -224,6 +225,7 @@ def LaunchGame_puissance4(j1_name : str, j2_name : str)->str:
     equality : bool
     lignes : int
     jeton : int
+    turn : int
 
     winCases : list[int]
     listChoices : list[int]
@@ -237,7 +239,7 @@ def LaunchGame_puissance4(j1_name : str, j2_name : str)->str:
     winCases = []
 
     #intialise les données
-    turn = 1
+    turn = random.randint(1,2)
     gameFinished = False
     equality = False
 
