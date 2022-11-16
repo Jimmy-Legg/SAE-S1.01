@@ -1,5 +1,5 @@
 import os
-
+import random
 #----------------------------------------
 #Affiche l'ecran de fin de partie
 #
@@ -105,7 +105,7 @@ def LaunchGame_allumettes(j1_name : str, j2_name : str):
     table : list[str]
 
     nb_allumettes = 20
-    turn = 1
+    turn = random.randint(1,2)
 
     table = []
 
