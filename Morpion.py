@@ -208,6 +208,7 @@ def LaunchGame_morpion(j1_name : str, j2_name : str)->str:
     choice : str
 
     gameFinished : bool
+    choiceIsOk : bool
 
     winType : int
     turn : int
@@ -231,7 +232,9 @@ def LaunchGame_morpion(j1_name : str, j2_name : str)->str:
     #boucle principale
     while not gameFinished:
 
-        while True:
+        choice = ""
+        choiceIsOk = False
+        while not choiceIsOk:
 
             #affiche le menu
             __afficherMenu(j1_name, j2_name, cases)
@@ -243,7 +246,7 @@ def LaunchGame_morpion(j1_name : str, j2_name : str)->str:
             #vérifie la valeur de l'utilisateur
             if(not choice.isdigit()):print("Valeur impossible")
             elif(int(choice) < 1 or int(choice) > 9):print("Valeur impossible")
-            elif(cases[int(choice) - 1] == "."):break
+            elif(cases[int(choice) - 1] == "."): choiceIsOk = True
             else: print("Cette case est occupée")
             os.system("pause")
 
