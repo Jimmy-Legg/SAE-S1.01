@@ -21,7 +21,7 @@ def __AskVerification(state : int, proposition : int):
 
     choix : str
     insulte : list[str]
-    insulte = ["Ne triche pas petit filou", "Essaye plutot de ne pas mentir"]
+    insulte = ["Ne triche pas petit filou", "Essaye plutot de ne pas mentir","Apprend à compter !"," Réfléchies avant d'agir","Des problèmes de mémoires ?","Bien tenté ... mais non."]
     choix = ""
 
     while choix != str(state):
@@ -75,7 +75,10 @@ def __LaunchTurn(nombre_a_trouver : int, couleur : str, couleur1 : str, j_name :
     print(couleur + j_name + W + " à vous de jouer !")
     print("-----------------------------------")
 
-    while True:
+    choix = ""
+    nombre = 0
+    choiceIsOk = False
+    while not choiceIsOk :
 
         print("Nombre entre " + O + str(mini) + W + " et " + P + str(maxi) + W + " : ")
         choix = input("Faites une première hypothèse : ")
@@ -86,7 +89,7 @@ def __LaunchTurn(nombre_a_trouver : int, couleur : str, couleur1 : str, j_name :
             print("-----------------------------------")
         else:
             nombre = int(choix)
-            break
+            choiceIsOk = True
 
     if(not int(choix) == nombre_a_trouver):
 
@@ -336,7 +339,3 @@ def LaunchGame_devinettes(j1_name : str, j2_name : str)->str:
 
     #check et retour du vainqueur
     return __checkWin(temps1, temps2, j1_name, j2_name)
-
-
-if __name__ == "__main__":
-    LaunchGame_devinettes("Nathan","Justin")
