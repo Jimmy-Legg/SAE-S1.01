@@ -70,7 +70,6 @@ def __checkWin(cases : list[list[str]])->list[int]:
 
     return winCases
 
-
 #----------------------------------------
 #Affiche l'interface de jeu
 #
@@ -126,6 +125,7 @@ def __askForPlayerAction(cases : list[list[str]], j_name : str, couleur : str)->
     W  = '\033[0m'  # white (normal)
 
     choiceIsOk : bool
+    placeFound : bool
     choiceIsOk = False
     lignes : int
     choice : str
@@ -150,7 +150,8 @@ def __askForPlayerAction(cases : list[list[str]], j_name : str, couleur : str)->
         else:
 
             lignes = 6
-            while True:
+            placeFound = False
+            while not placeFound:
 
                 if(lignes <= 0):
                     print(R + "La colonne est pleine !" + W)
@@ -162,7 +163,7 @@ def __askForPlayerAction(cases : list[list[str]], j_name : str, couleur : str)->
 
                 else:
                     choiceIsOk = True
-                    break
+                    placeFound = True
 
     return[int(choice), lignes] #pyright: reportUnboundVariable=false
 
